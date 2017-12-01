@@ -17,7 +17,7 @@ namespace Ceed
 		private void Form1_Load(object sender, EventArgs e)
 		{
 			var appName = Process.GetCurrentProcess().ProcessName + ".exe";
-			SetIE8KeyforWebBrowserControl(appName);
+			SetIEKeyforWebBrowserControl(appName);
 			try
 			{
 				WebClient Client = new WebClient();
@@ -64,12 +64,8 @@ namespace Ceed
 			if (webBrowser1.CanGoBack)
 				webBrowser1.GoBack();
 		}
-
-		private void timer1_Tick(object sender, EventArgs e)
-		{
-			
-		}
-		private void SetIE8KeyforWebBrowserControl(string appName)
+		
+		private void SetIEKeyforWebBrowserControl(string appName)
 		{
 			RegistryKey Regkey = null;
 			try

@@ -28,7 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabBrowser = new System.Windows.Forms.TabPage();
@@ -52,7 +51,6 @@
 			this.btnBrowse = new System.Windows.Forms.Button();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
 			this.tabControl1.SuspendLayout();
 			this.tabBrowser.SuspendLayout();
@@ -303,10 +301,6 @@
 			this.lblStatus.Size = new System.Drawing.Size(10, 17);
 			this.lblStatus.Text = ".";
 			// 
-			// timer1
-			// 
-			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -347,7 +341,6 @@
 		private System.Windows.Forms.TabPage tabConvert;
 		private System.Windows.Forms.StatusStrip statusStrip1;
 		private System.Windows.Forms.ToolStripStatusLabel lblStatus;
-		private System.Windows.Forms.Timer timer1;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.ListBox lstFiles;
 		private System.Windows.Forms.TextBox txtLoadPath;
