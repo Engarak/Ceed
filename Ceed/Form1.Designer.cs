@@ -51,11 +51,13 @@
 			this.btnBrowse = new System.Windows.Forms.Button();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-			this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+			this.dlgLoadPath = new System.Windows.Forms.FolderBrowserDialog();
+			this.chkAutoUnzip = new System.Windows.Forms.CheckBox();
 			this.tabControl1.SuspendLayout();
 			this.tabBrowser.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.tabConvert.SuspendLayout();
+			this.groupBox2.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -179,6 +181,7 @@
 			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox2.Controls.Add(this.chkAutoUnzip);
 			this.groupBox2.Location = new System.Drawing.Point(7, 354);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(684, 150);
@@ -284,6 +287,7 @@
 			this.btnBrowse.TabIndex = 0;
 			this.btnBrowse.Text = "...";
 			this.btnBrowse.UseVisualStyleBackColor = true;
+			this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
 			// 
 			// statusStrip1
 			// 
@@ -300,6 +304,18 @@
 			this.lblStatus.Name = "lblStatus";
 			this.lblStatus.Size = new System.Drawing.Size(10, 17);
 			this.lblStatus.Text = ".";
+			// 
+			// chkAutoUnzip
+			// 
+			this.chkAutoUnzip.AutoSize = true;
+			this.chkAutoUnzip.Checked = true;
+			this.chkAutoUnzip.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.chkAutoUnzip.Location = new System.Drawing.Point(7, 19);
+			this.chkAutoUnzip.Name = "chkAutoUnzip";
+			this.chkAutoUnzip.Size = new System.Drawing.Size(132, 17);
+			this.chkAutoUnzip.TabIndex = 0;
+			this.chkAutoUnzip.Text = "Unzip files in load path";
+			this.chkAutoUnzip.UseVisualStyleBackColor = true;
 			// 
 			// Form1
 			// 
@@ -318,6 +334,8 @@
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
 			this.tabConvert.ResumeLayout(false);
+			this.groupBox2.ResumeLayout(false);
+			this.groupBox2.PerformLayout();
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);
@@ -345,13 +363,14 @@
 		private System.Windows.Forms.ListBox lstFiles;
 		private System.Windows.Forms.TextBox txtLoadPath;
 		private System.Windows.Forms.Button btnBrowse;
-		private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+		private System.Windows.Forms.FolderBrowserDialog dlgLoadPath;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.TextBox txtSavePath;
 		private System.Windows.Forms.Button btnSave;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Button btnConvert;
+		private System.Windows.Forms.CheckBox chkAutoUnzip;
 	}
 }
 

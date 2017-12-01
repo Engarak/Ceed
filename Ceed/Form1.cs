@@ -4,6 +4,7 @@ using System.Net;
 using System.IO;
 using Microsoft.Win32;
 using System.Diagnostics;
+using System.Configuration;
 
 namespace Ceed
 {
@@ -27,6 +28,8 @@ namespace Ceed
 			{
 				lblStatus.Text="Cannot Download C2T, using prior downloaded version.  Check internet connection and reload Ceed if you need the new version.";
 			}
+
+			loadGames();
 
 			try
 			{
@@ -142,6 +145,64 @@ namespace Ceed
 			{
 				txtURLBar.Text = "Loading...";
 			}
+		}
+		private void unzipFiles()
+		{
+			try
+			{
+				string loadPath = ConfigurationManager.AppSettings["loadPath"];
+				lstFiles.Items.Clear();
+				DirectoryInfo directory = new DirectoryInfo(loadPath);
+				FileInfo[] files = directory.GetFiles("*.zip");
+				for (int i = 0; i < files.Length; i++)
+				{
+					lblStatus.Text = "unzipping " + files[i];
+					System.Diagnostics.Process process = new System.Diagnostics.Process();
+					System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+					startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+					startInfo.FileName = @".\7zip\7za.exe";
+					startInfo.Arguments = "x " + files[i];
+					process.StartInfo = startInfo;
+					process.Start();
+				}
+			}
+			catch (Exception exc)
+			{
+				lblStatus.Text = exc.Message;
+			}
+		}
+		private void loadGames()
+		{
+			try
+			{
+				string loadPath = ConfigurationManager.AppSettings["loadPath"];
+				lstFiles.Items.Clear();
+				DirectoryInfo directory = new DirectoryInfo(loadPath);
+				FileInfo[] files = directory.GetFiles("*.dsk");
+				for (int i = 0; i < files.Length; i++)
+				{
+					lstFiles.Items.Add(files[i].ToString());
+				}
+				lblStatus.Text = "Loaded " + files.Length + " disk images to the list";
+			}
+			catch (Exception exc)
+			{
+				lblStatus.Text = exc.Message;
+			}
+		}
+		private void btnBrowse_Click(object sender, EventArgs e)
+		{
+			if (dlgLoadPath.ShowDialog() == DialogResult.OK)
+			{
+				//save new path to app.config
+				string ProviderKey = "loadPath";
+				Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+				config.AppSettings.Settings[ProviderKey].Value = dlgLoadPath.SelectedPath.ToString();
+				config.Save();
+				ConfigurationManager.RefreshSection("appSettings");
+			}
+			//load path and re-fill list box
+			loadGames();
 		}
 	}
 }
