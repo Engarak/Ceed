@@ -67,14 +67,7 @@ namespace Ceed
 
 		private void timer1_Tick(object sender, EventArgs e)
 		{
-			try
-			{
-				txtURLBar.Text = webBrowser1.Url.ToString();
-			}
-			catch
-			{
-				txtURLBar.Text = "Loading...";
-			}
+			
 		}
 		private void SetIE8KeyforWebBrowserControl(string appName)
 		{
@@ -135,6 +128,23 @@ namespace Ceed
 				//Close the Registry 
 				if (Regkey != null)
 					Regkey.Close();
+			}
+		}
+
+		private void webBrowser1_Navigating(object sender, WebBrowserNavigatingEventArgs e)
+		{
+			txtURLBar.Text = "Loading...";
+		}
+
+		private void webBrowser1_Navigated(object sender, WebBrowserNavigatedEventArgs e)
+		{
+			try
+			{
+				txtURLBar.Text = webBrowser1.Url.ToString();
+			}
+			catch
+			{
+				txtURLBar.Text = "Loading...";
 			}
 		}
 	}
