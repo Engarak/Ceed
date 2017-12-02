@@ -26,10 +26,9 @@ namespace Ceed
 			}
 			catch
 			{
-				lblStatus.Text="Cannot Download C2T, using prior downloaded version.  Check internet connection and reload Ceed if you need the new version.";
+				lblStatus.Text="Cannot Download C2T, using prior downloaded version.";
 			}
 
-			loadGames();
 
 			try
 			{
@@ -146,13 +145,11 @@ namespace Ceed
 				txtURLBar.Text = "Loading...";
 			}
 		}
-		private void unzipFiles()
+		private void unzipFiles(string filePath)
 		{
 			try
-			{
-				string loadPath = ConfigurationManager.AppSettings["loadPath"];
-				lstFiles.Items.Clear();
-				DirectoryInfo directory = new DirectoryInfo(loadPath);
+			{				
+				DirectoryInfo directory = new DirectoryInfo(filePath);
 				FileInfo[] files = directory.GetFiles("*.zip");
 				for (int i = 0; i < files.Length; i++)
 				{
@@ -176,6 +173,10 @@ namespace Ceed
 			try
 			{
 				string loadPath = ConfigurationManager.AppSettings["loadPath"];
+				if (chkAutoUnzip.Checked == true)
+				{
+					unzipFiles(loadPath);
+				}
 				lstFiles.Items.Clear();
 				DirectoryInfo directory = new DirectoryInfo(loadPath);
 				FileInfo[] files = directory.GetFiles("*.dsk");
@@ -184,6 +185,7 @@ namespace Ceed
 					lstFiles.Items.Add(files[i].ToString());
 				}
 				lblStatus.Text = "Loaded " + files.Length + " disk images to the list";
+				
 			}
 			catch (Exception exc)
 			{
@@ -200,8 +202,12 @@ namespace Ceed
 				config.AppSettings.Settings[ProviderKey].Value = dlgLoadPath.SelectedPath.ToString();
 				config.Save();
 				ConfigurationManager.RefreshSection("appSettings");
+				lblStatus.Text = "Path captured, click load to list disk images.";
 			}
-			//load path and re-fill list box
+		}
+
+		private void btnLoad_Click(object sender, EventArgs e)
+		{
 			loadGames();
 		}
 	}
