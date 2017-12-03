@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabBrowser = new System.Windows.Forms.TabPage();
@@ -54,6 +55,8 @@
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
 			this.dlgLoadPath = new System.Windows.Forms.FolderBrowserDialog();
+			this.timer1 = new System.Windows.Forms.Timer(this.components);
+			this.dlgSavePath = new System.Windows.Forms.FolderBrowserDialog();
 			this.tabControl1.SuspendLayout();
 			this.tabBrowser.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
@@ -281,6 +284,7 @@
 			this.btnSave.TabIndex = 3;
 			this.btnSave.Text = "...";
 			this.btnSave.UseVisualStyleBackColor = true;
+			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
 			// 
 			// lstFiles
 			// 
@@ -290,6 +294,7 @@
 			this.lstFiles.Location = new System.Drawing.Point(6, 73);
 			this.lstFiles.MultiColumn = true;
 			this.lstFiles.Name = "lstFiles";
+			this.lstFiles.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
 			this.lstFiles.Size = new System.Drawing.Size(671, 173);
 			this.lstFiles.TabIndex = 2;
 			// 
@@ -329,6 +334,11 @@
 			this.lblStatus.Name = "lblStatus";
 			this.lblStatus.Size = new System.Drawing.Size(10, 17);
 			this.lblStatus.Text = ".";
+			// 
+			// timer1
+			// 
+			this.timer1.Enabled = true;
+			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
 			// 
 			// Form1
 			// 
@@ -385,6 +395,8 @@
 		private System.Windows.Forms.Button btnConvert;
 		private System.Windows.Forms.CheckBox chkAutoUnzip;
 		private System.Windows.Forms.Button btnLoad;
+		private System.Windows.Forms.Timer timer1;
+		private System.Windows.Forms.FolderBrowserDialog dlgSavePath;
 	}
 }
 

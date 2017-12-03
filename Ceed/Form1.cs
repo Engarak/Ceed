@@ -18,6 +18,17 @@ namespace Ceed
 		private void Form1_Load(object sender, EventArgs e)
 		{
 			var appName = Process.GetCurrentProcess().ProcessName + ".exe";
+			var loadPath = ConfigurationManager.AppSettings["loadPath"];
+			var savePath = ConfigurationManager.AppSettings["savePath"];
+			if(loadPath!=@"c:\")
+			{
+				txtLoadPath.Text = loadPath;
+				btnLoad.Enabled = true;
+			}
+			if (savePath != @"c:\")
+			{
+				txtSavePath.Text = savePath;
+			}
 			SetIEKeyforWebBrowserControl(appName);
 			try
 			{
@@ -217,6 +228,29 @@ namespace Ceed
 			config.Save();
 			ConfigurationManager.RefreshSection("appSettings");
 			loadGames();
+		}
+
+		private void timer1_Tick(object sender, EventArgs e)
+		{
+			if (txtLoadPath.Text != "" && txtSavePath.Text != "")
+			{
+				btnConvert.Enabled = true;
+			}
+		}
+
+		private void btnSave_Click(object sender, EventArgs e)
+		{
+			if (dlgSavePath.ShowDialog() == DialogResult.OK)
+			{
+				//save new path to app.config
+				txtSavePath.Text = dlgSavePath.SelectedPath.ToString();
+				string ProviderKey = "savePath";
+				Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+				config.AppSettings.Settings[ProviderKey].Value = txtLoadPath.Text;
+				config.Save();
+				ConfigurationManager.RefreshSection("appSettings");
+				lblStatus.Text = "Save path selected successfully!";
+			}
 		}
 	}
 }
