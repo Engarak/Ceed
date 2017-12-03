@@ -36,6 +36,11 @@ namespace Ceed
 			SetIEKeyforWebBrowserControl(appName);
 			try
 			{
+				System.IO.DirectoryInfo di = new DirectoryInfo(runPath + @"\c2t");
+				if (!(di.Exists))
+				{
+					di.Create();
+				}
 				WebClient Client = new WebClient();
 				Client.DownloadFile("https://github.com/datajerk/c2t/archive/master.zip", @".\c2t\master.zip");
 			}
