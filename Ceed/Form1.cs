@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Net;
 using System.IO;
+using System.IO.Compression;
 using Microsoft.Win32;
 using System.Diagnostics;
 using System.Configuration;
@@ -15,11 +16,14 @@ namespace Ceed
 			InitializeComponent();
 		}
 
+		string arguments = string.Empty;
+
 		private void Form1_Load(object sender, EventArgs e)
 		{
 			var appName = Process.GetCurrentProcess().ProcessName + ".exe";
 			var loadPath = ConfigurationManager.AppSettings["loadPath"];
 			var savePath = ConfigurationManager.AppSettings["savePath"];
+			var runPath = Environment.CurrentDirectory.ToString();
 			if(loadPath!=@"c:\")
 			{
 				txtLoadPath.Text = loadPath;
@@ -40,16 +44,24 @@ namespace Ceed
 				lblStatus.Text="Cannot Download C2T, using prior downloaded version.";
 			}
 
-
 			try
 			{
-				System.Diagnostics.Process process = new System.Diagnostics.Process();
-				System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-				startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-				startInfo.FileName = @".\7zip\7za.exe";
-				startInfo.Arguments = "x master.zip";
-				process.StartInfo = startInfo;
-				process.Start();
+				System.IO.DirectoryInfo di = new DirectoryInfo(runPath+@"\c2t\c2t-master");
+				if (di.Exists)
+				{
+					foreach (FileInfo file in di.GetFiles())
+					{
+						file.Delete();
+					}
+					foreach (DirectoryInfo dir in di.GetDirectories())
+					{
+						dir.Delete(true);
+					}
+					di.Delete();
+				}
+				string zipPath = runPath+@"\c2t\master.zip";
+				string extractPath = runPath+@"\c2t";
+				ZipFile.ExtractToDirectory(zipPath, extractPath);				
 				if(File.Exists(@".\c2t\master.zip"))
 				{
 					File.Delete(@".\c2t\master.zip");
@@ -164,14 +176,9 @@ namespace Ceed
 				FileInfo[] files = directory.GetFiles("*.zip");
 				for (int i = 0; i < files.Length; i++)
 				{
-					lblStatus.Text = "unzipping " + files[i];
-					System.Diagnostics.Process process = new System.Diagnostics.Process();
-					System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-					startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-					startInfo.FileName = @".\7zip\7za.exe";
-					startInfo.Arguments = "x " + files[i];
-					process.StartInfo = startInfo;
-					process.Start();
+					string zipPath = filePath + @"\"+ files;
+					string extractPath = filePath;
+					ZipFile.ExtractToDirectory(zipPath, extractPath);
 				}
 			}
 			catch (Exception exc)
