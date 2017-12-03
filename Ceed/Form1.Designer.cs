@@ -42,6 +42,7 @@
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.chkAutoUnzip = new System.Windows.Forms.CheckBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.btnLoad = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.btnConvert = new System.Windows.Forms.Button();
@@ -53,7 +54,6 @@
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
 			this.dlgLoadPath = new System.Windows.Forms.FolderBrowserDialog();
-			this.btnLoad = new System.Windows.Forms.Button();
 			this.tabControl1.SuspendLayout();
 			this.tabBrowser.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
@@ -193,7 +193,7 @@
 			// chkAutoUnzip
 			// 
 			this.chkAutoUnzip.AutoSize = true;
-			this.chkAutoUnzip.Location = new System.Drawing.Point(7, 19);
+			this.chkAutoUnzip.Location = new System.Drawing.Point(6, 19);
 			this.chkAutoUnzip.Name = "chkAutoUnzip";
 			this.chkAutoUnzip.Size = new System.Drawing.Size(132, 17);
 			this.chkAutoUnzip.TabIndex = 0;
@@ -221,6 +221,18 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Files";
 			// 
+			// btnLoad
+			// 
+			this.btnLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnLoad.Enabled = false;
+			this.btnLoad.Location = new System.Drawing.Point(614, 38);
+			this.btnLoad.Name = "btnLoad";
+			this.btnLoad.Size = new System.Drawing.Size(63, 19);
+			this.btnLoad.TabIndex = 8;
+			this.btnLoad.Text = "Load";
+			this.btnLoad.UseVisualStyleBackColor = true;
+			this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
+			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
@@ -242,6 +254,7 @@
 			// btnConvert
 			// 
 			this.btnConvert.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.btnConvert.Enabled = false;
 			this.btnConvert.Location = new System.Drawing.Point(254, 304);
 			this.btnConvert.Name = "btnConvert";
 			this.btnConvert.Size = new System.Drawing.Size(147, 25);
@@ -316,16 +329,6 @@
 			this.lblStatus.Name = "lblStatus";
 			this.lblStatus.Size = new System.Drawing.Size(10, 17);
 			this.lblStatus.Text = ".";
-			// 
-			// btnLoad
-			// 
-			this.btnLoad.Location = new System.Drawing.Point(614, 38);
-			this.btnLoad.Name = "btnLoad";
-			this.btnLoad.Size = new System.Drawing.Size(63, 19);
-			this.btnLoad.TabIndex = 8;
-			this.btnLoad.Text = "Load";
-			this.btnLoad.UseVisualStyleBackColor = true;
-			this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
 			// 
 			// Form1
 			// 

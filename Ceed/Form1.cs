@@ -197,17 +197,25 @@ namespace Ceed
 			if (dlgLoadPath.ShowDialog() == DialogResult.OK)
 			{
 				//save new path to app.config
+				txtLoadPath.Text = dlgLoadPath.SelectedPath.ToString();
 				string ProviderKey = "loadPath";
 				Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-				config.AppSettings.Settings[ProviderKey].Value = dlgLoadPath.SelectedPath.ToString();
+				config.AppSettings.Settings[ProviderKey].Value = txtLoadPath.Text;
 				config.Save();
 				ConfigurationManager.RefreshSection("appSettings");
 				lblStatus.Text = "Path captured, click load to list disk images.";
+				btnLoad.Enabled = true;
 			}
 		}
 
 		private void btnLoad_Click(object sender, EventArgs e)
 		{
+			//save new path to app.config
+			string ProviderKey = "loadPath";
+			Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+			config.AppSettings.Settings[ProviderKey].Value = txtLoadPath.Text;
+			config.Save();
+			ConfigurationManager.RefreshSection("appSettings");
 			loadGames();
 		}
 	}
