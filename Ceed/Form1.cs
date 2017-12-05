@@ -23,11 +23,14 @@ namespace Ceed
 			var appName = Process.GetCurrentProcess().ProcessName + ".exe";
 			var loadPath = ConfigurationManager.AppSettings["loadPath"];
 			var savePath = ConfigurationManager.AppSettings["savePath"];
+			System.Uri uri = new System.Uri(ConfigurationManager.AppSettings["homeLink"]);
+			webBrowser1.Url=uri;
 			var runPath = Environment.CurrentDirectory.ToString();
 			if(loadPath!=@"c:\")
 			{
 				txtLoadPath.Text = loadPath;
 				btnLoad.Enabled = true;
+				loadGames();
 			}
 			if (savePath != @"c:\")
 			{
@@ -36,22 +39,22 @@ namespace Ceed
 			SetIEKeyforWebBrowserControl(appName);
 			try
 			{
-				System.IO.DirectoryInfo di = new DirectoryInfo(runPath + @"\c2t");
+				System.IO.DirectoryInfo di = new DirectoryInfo(runPath + @"\temp");
 				if (!(di.Exists))
 				{
 					di.Create();
 				}
 				WebClient Client = new WebClient();
-				Client.DownloadFile("https://github.com/datajerk/c2t/archive/master.zip", @".\c2t\master.zip");
+				Client.DownloadFile("https://github.com/datajerk/c2t/archive/master.zip", @".\temp\master.zip");
 			}
 			catch
 			{
-				lblStatus.Text="Cannot Download C2T, using prior downloaded version.";
+				statusDetails("Cannot Download C2T, using prior downloaded version.");
 			}
 
 			try
 			{
-				System.IO.DirectoryInfo di = new DirectoryInfo(runPath+@"\c2t\c2t-master");
+				DirectoryInfo di = new DirectoryInfo(runPath+@"\c2t-master");
 				if (di.Exists)
 				{
 					foreach (FileInfo file in di.GetFiles())
@@ -64,23 +67,37 @@ namespace Ceed
 					}
 					di.Delete();
 				}
-				string zipPath = runPath+@"\c2t\master.zip";
-				string extractPath = runPath+@"\c2t";
-				ZipFile.ExtractToDirectory(zipPath, extractPath);				
-				if(File.Exists(@".\c2t\master.zip"))
+				di = new DirectoryInfo(runPath + @"\c2t");
+				if (di.Exists)
 				{
-					File.Delete(@".\c2t\master.zip");
+					foreach (FileInfo file in di.GetFiles())
+					{
+						file.Delete();
+					}
+					foreach (DirectoryInfo dir in di.GetDirectories())
+					{
+						dir.Delete(true);
+					}
+					di.Delete();
+				}
+				string zipPath = runPath+@"\temp\master.zip";
+				string extractPath = runPath;
+				ZipFile.ExtractToDirectory(zipPath, extractPath);
+				Directory.Move(runPath + @"\c2t-master", runPath +@"\c2t");
+				if (File.Exists(@".\temp\master.zip"))
+				{
+					File.Delete(@".\temp\master.zip");
 				}
 			}
 			catch (Exception exc)
 			{
-				lblStatus.Text=exc.Message;
+				statusDetails(exc.Message);
 			}
 		}
 
 		private void btnHome_Click(object sender, EventArgs e)
 		{
-			webBrowser1.Navigate("https://archive.org/details/softwarelibrary_apple");
+			webBrowser1.Navigate(ConfigurationManager.AppSettings["homeLink"]);
 		}
 
 		private void btnFwd_Click(object sender, EventArgs e)
@@ -188,7 +205,7 @@ namespace Ceed
 			}
 			catch (Exception exc)
 			{
-				lblStatus.Text = exc.Message;
+				statusDetails(exc.Message);
 			}
 		}
 		private void loadGames()
@@ -207,12 +224,12 @@ namespace Ceed
 				{
 					lstFiles.Items.Add(files[i].ToString());
 				}
-				lblStatus.Text = "Loaded " + files.Length + " disk images to the list";
+				statusDetails("Loaded " + files.Length + " disk images to the list");
 				
 			}
 			catch (Exception exc)
 			{
-				lblStatus.Text = exc.Message;
+				statusDetails(exc.Message);
 			}
 		}
 		private void btnBrowse_Click(object sender, EventArgs e)
@@ -226,7 +243,7 @@ namespace Ceed
 				config.AppSettings.Settings[ProviderKey].Value = txtLoadPath.Text;
 				config.Save();
 				ConfigurationManager.RefreshSection("appSettings");
-				lblStatus.Text = "Path captured, click load to list disk images.";
+				statusDetails("Path captured, click load to list disk images.");
 				btnLoad.Enabled = true;
 			}
 		}
@@ -244,7 +261,7 @@ namespace Ceed
 
 		private void timer1_Tick(object sender, EventArgs e)
 		{
-			if (txtLoadPath.Text != "" && txtSavePath.Text != "")
+			if (txtLoadPath.Text != "" && txtSavePath.Text != "" && lstFiles.Items.Count>0)
 			{
 				btnConvert.Enabled = true;
 			}
@@ -258,11 +275,88 @@ namespace Ceed
 				txtSavePath.Text = dlgSavePath.SelectedPath.ToString();
 				string ProviderKey = "savePath";
 				Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-				config.AppSettings.Settings[ProviderKey].Value = txtLoadPath.Text;
+				config.AppSettings.Settings[ProviderKey].Value = txtSavePath.Text;
 				config.Save();
 				ConfigurationManager.RefreshSection("appSettings");
-				lblStatus.Text = "Save path selected successfully!";
+				statusDetails("Save path selected successfully!");
 			}
+		}
+
+		private void btnClear_Click(object sender, EventArgs e)
+		{
+			string ProviderKey = "savePath";
+			Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+			config.AppSettings.Settings[ProviderKey].Value = @"c:\";
+			config.Save();
+			ConfigurationManager.RefreshSection("appSettings");
+			ProviderKey = "loadPath";
+			config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+			config.AppSettings.Settings[ProviderKey].Value = @"c:\";
+			config.Save();
+			ConfigurationManager.RefreshSection("appSettings");
+			statusDetails("Save and Load path cleared successfully!");
+		}
+		
+		private void statusDetails(string statusMessage)
+		{
+			lblStatus.ForeColor = System.Drawing.Color.Red;
+			lblStatus.Text = statusMessage;
+			tmrColorChange.Start();
+
+		}
+		private void btnConvert_Click(object sender, EventArgs e)
+		{
+			var converCount = 0;
+			if (lstFiles.SelectedItems.Count > 0)
+			{
+				foreach (var diskImage in lstFiles.SelectedItems)
+				{
+					arguments = string.Empty;
+					var appPath = @"""" + Environment.CurrentDirectory.ToString() + @"\c2t\bin\c2t-96h.exe""";
+					if (cboAppleType.Text == "Apple //")
+					{
+						arguments = arguments + " -2 ";
+					}
+					else
+					{
+
+						arguments = arguments + " -1 ";
+					}
+					if (chkEmulatedDrive.Checked == true)
+					{
+						arguments = arguments + " -n ";
+					}
+					string[] outputFile = diskImage.ToString().Split('.');
+
+					arguments = arguments + @" """ + txtLoadPath.Text + @"\" + diskImage.ToString() + @""" """ + txtSavePath.Text + @"\" + outputFile[0] + @".wav""";
+					try
+					{
+						statusDetails("converting " + diskImage.ToString());
+						System.Diagnostics.Process process = new System.Diagnostics.Process();
+						System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+						startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+						startInfo.FileName = appPath;
+						startInfo.Arguments = arguments;
+						process.StartInfo = startInfo;
+						process.Start();
+						converCount++;
+					}
+					catch (Exception exc)
+					{
+						statusDetails(exc.Message);
+					}
+					statusDetails("Conversion of " + converCount + " disk images completed.  Check " + txtSavePath.Text + " for converted files");
+				}
+			}
+			else
+			{
+				statusDetails("Please select one or more disk images.");
+			}
+		}
+
+		private void tmrColorChange_Tick(object sender, EventArgs e)
+		{
+			lblStatus.ForeColor= System.Drawing.Color.Black;
 		}
 	}
 }

@@ -41,8 +41,12 @@
 			this.btnStop = new System.Windows.Forms.ToolStripButton();
 			this.tabConvert = new System.Windows.Forms.TabPage();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.chkEmulatedDrive = new System.Windows.Forms.CheckBox();
+			this.label3 = new System.Windows.Forms.Label();
+			this.cboAppleType = new System.Windows.Forms.ComboBox();
 			this.chkAutoUnzip = new System.Windows.Forms.CheckBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.btnClear = new System.Windows.Forms.Button();
 			this.btnLoad = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
@@ -57,6 +61,7 @@
 			this.dlgLoadPath = new System.Windows.Forms.FolderBrowserDialog();
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.dlgSavePath = new System.Windows.Forms.FolderBrowserDialog();
+			this.tmrColorChange = new System.Windows.Forms.Timer(this.components);
 			this.tabControl1.SuspendLayout();
 			this.tabBrowser.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
@@ -185,6 +190,9 @@
 			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox2.Controls.Add(this.chkEmulatedDrive);
+			this.groupBox2.Controls.Add(this.label3);
+			this.groupBox2.Controls.Add(this.cboAppleType);
 			this.groupBox2.Controls.Add(this.chkAutoUnzip);
 			this.groupBox2.Location = new System.Drawing.Point(7, 354);
 			this.groupBox2.Name = "groupBox2";
@@ -192,6 +200,37 @@
 			this.groupBox2.TabIndex = 1;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Advanced Settings";
+			// 
+			// chkEmulatedDrive
+			// 
+			this.chkEmulatedDrive.AutoSize = true;
+			this.chkEmulatedDrive.Location = new System.Drawing.Point(6, 42);
+			this.chkEmulatedDrive.Name = "chkEmulatedDrive";
+			this.chkEmulatedDrive.Size = new System.Drawing.Size(232, 17);
+			this.chkEmulatedDrive.TabIndex = 3;
+			this.chkEmulatedDrive.Text = "Emulated Drive (CFFA3000, SDISK //, etc.)";
+			this.chkEmulatedDrive.UseVisualStyleBackColor = true;
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(261, 20);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(61, 13);
+			this.label3.TabIndex = 2;
+			this.label3.Text = "Apple Type";
+			// 
+			// cboAppleType
+			// 
+			this.cboAppleType.FormattingEnabled = true;
+			this.cboAppleType.Items.AddRange(new object[] {
+            "Apple //",
+            "Apple I"});
+			this.cboAppleType.Location = new System.Drawing.Point(328, 15);
+			this.cboAppleType.Name = "cboAppleType";
+			this.cboAppleType.Size = new System.Drawing.Size(121, 21);
+			this.cboAppleType.TabIndex = 1;
+			this.cboAppleType.Text = "Apple //";
 			// 
 			// chkAutoUnzip
 			// 
@@ -208,6 +247,7 @@
 			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox1.Controls.Add(this.btnClear);
 			this.groupBox1.Controls.Add(this.btnLoad);
 			this.groupBox1.Controls.Add(this.label2);
 			this.groupBox1.Controls.Add(this.label1);
@@ -223,6 +263,17 @@
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Files";
+			// 
+			// btnClear
+			// 
+			this.btnClear.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.btnClear.Location = new System.Drawing.Point(328, 299);
+			this.btnClear.Name = "btnClear";
+			this.btnClear.Size = new System.Drawing.Size(145, 25);
+			this.btnClear.TabIndex = 9;
+			this.btnClear.Text = "Clear";
+			this.btnClear.UseVisualStyleBackColor = true;
+			this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
 			// 
 			// btnLoad
 			// 
@@ -258,12 +309,13 @@
 			// 
 			this.btnConvert.Anchor = System.Windows.Forms.AnchorStyles.Top;
 			this.btnConvert.Enabled = false;
-			this.btnConvert.Location = new System.Drawing.Point(254, 304);
+			this.btnConvert.Location = new System.Drawing.Point(174, 298);
 			this.btnConvert.Name = "btnConvert";
-			this.btnConvert.Size = new System.Drawing.Size(147, 25);
+			this.btnConvert.Size = new System.Drawing.Size(145, 25);
 			this.btnConvert.TabIndex = 5;
 			this.btnConvert.Text = "Convert";
 			this.btnConvert.UseVisualStyleBackColor = true;
+			this.btnConvert.Click += new System.EventHandler(this.btnConvert_Click);
 			// 
 			// txtSavePath
 			// 
@@ -292,7 +344,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.lstFiles.FormattingEnabled = true;
 			this.lstFiles.Location = new System.Drawing.Point(6, 73);
-			this.lstFiles.MultiColumn = true;
 			this.lstFiles.Name = "lstFiles";
 			this.lstFiles.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
 			this.lstFiles.Size = new System.Drawing.Size(671, 173);
@@ -339,6 +390,11 @@
 			// 
 			this.timer1.Enabled = true;
 			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+			// 
+			// tmrColorChange
+			// 
+			this.tmrColorChange.Interval = 1750;
+			this.tmrColorChange.Tick += new System.EventHandler(this.tmrColorChange_Tick);
 			// 
 			// Form1
 			// 
@@ -397,6 +453,11 @@
 		private System.Windows.Forms.Button btnLoad;
 		private System.Windows.Forms.Timer timer1;
 		private System.Windows.Forms.FolderBrowserDialog dlgSavePath;
+		private System.Windows.Forms.ComboBox cboAppleType;
+		private System.Windows.Forms.Button btnClear;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.CheckBox chkEmulatedDrive;
+		private System.Windows.Forms.Timer tmrColorChange;
 	}
 }
 
