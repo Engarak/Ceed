@@ -37,17 +37,6 @@
 			this.dlgSavePath = new System.Windows.Forms.FolderBrowserDialog();
 			this.tmrColorChange = new System.Windows.Forms.Timer(this.components);
 			this.tabConvert = new System.Windows.Forms.TabPage();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.btnBrowse = new System.Windows.Forms.Button();
-			this.txtLoadPath = new System.Windows.Forms.TextBox();
-			this.lstFiles = new System.Windows.Forms.ListBox();
-			this.btnSave = new System.Windows.Forms.Button();
-			this.txtSavePath = new System.Windows.Forms.TextBox();
-			this.btnConvert = new System.Windows.Forms.Button();
-			this.label1 = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
-			this.btnLoad = new System.Windows.Forms.Button();
-			this.btnClear = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.chkAutoUnzip = new System.Windows.Forms.CheckBox();
 			this.cboAppleType = new System.Windows.Forms.ComboBox();
@@ -64,23 +53,34 @@
 			this.webBrowser1 = new System.Windows.Forms.WebBrowser();
 			this.picLoad = new System.Windows.Forms.PictureBox();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.btnLoad = new System.Windows.Forms.Button();
+			this.label2 = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
+			this.txtSavePath = new System.Windows.Forms.TextBox();
+			this.btnSave = new System.Windows.Forms.Button();
+			this.lstFiles = new System.Windows.Forms.ListBox();
+			this.txtLoadPath = new System.Windows.Forms.TextBox();
+			this.btnBrowse = new System.Windows.Forms.Button();
+			this.btnClear = new System.Windows.Forms.Button();
+			this.btnConvert = new System.Windows.Forms.Button();
 			this.statusStrip1.SuspendLayout();
 			this.tabConvert.SuspendLayout();
-			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.tabBrowser.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picLoad)).BeginInit();
 			this.tabControl1.SuspendLayout();
+			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblStatus});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 544);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 707);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(710, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(1008, 22);
 			this.statusStrip1.TabIndex = 1;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -102,159 +102,27 @@
 			// 
 			// tabConvert
 			// 
-			this.tabConvert.Controls.Add(this.groupBox2);
 			this.tabConvert.Controls.Add(this.groupBox1);
+			this.tabConvert.Controls.Add(this.groupBox2);
 			this.tabConvert.Location = new System.Drawing.Point(4, 22);
 			this.tabConvert.Name = "tabConvert";
 			this.tabConvert.Padding = new System.Windows.Forms.Padding(3);
-			this.tabConvert.Size = new System.Drawing.Size(697, 510);
+			this.tabConvert.Size = new System.Drawing.Size(995, 673);
 			this.tabConvert.TabIndex = 1;
 			this.tabConvert.Text = "Convert Disk Image";
 			this.tabConvert.UseVisualStyleBackColor = true;
-			// 
-			// groupBox1
-			// 
-			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox1.AutoSize = true;
-			this.groupBox1.Controls.Add(this.btnClear);
-			this.groupBox1.Controls.Add(this.btnLoad);
-			this.groupBox1.Controls.Add(this.label2);
-			this.groupBox1.Controls.Add(this.label1);
-			this.groupBox1.Controls.Add(this.btnConvert);
-			this.groupBox1.Controls.Add(this.txtSavePath);
-			this.groupBox1.Controls.Add(this.btnSave);
-			this.groupBox1.Controls.Add(this.lstFiles);
-			this.groupBox1.Controls.Add(this.txtLoadPath);
-			this.groupBox1.Controls.Add(this.btnBrowse);
-			this.groupBox1.Location = new System.Drawing.Point(7, 7);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(684, 342);
-			this.groupBox1.TabIndex = 0;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Files";
-			// 
-			// btnBrowse
-			// 
-			this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnBrowse.Location = new System.Drawing.Point(578, 34);
-			this.btnBrowse.Name = "btnBrowse";
-			this.btnBrowse.Size = new System.Drawing.Size(29, 20);
-			this.btnBrowse.TabIndex = 0;
-			this.btnBrowse.Text = "...";
-			this.btnBrowse.UseVisualStyleBackColor = true;
-			this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
-			// 
-			// txtLoadPath
-			// 
-			this.txtLoadPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtLoadPath.Location = new System.Drawing.Point(6, 35);
-			this.txtLoadPath.Name = "txtLoadPath";
-			this.txtLoadPath.ReadOnly = true;
-			this.txtLoadPath.Size = new System.Drawing.Size(566, 20);
-			this.txtLoadPath.TabIndex = 1;
-			// 
-			// lstFiles
-			// 
-			this.lstFiles.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.lstFiles.ColumnWidth = 400;
-			this.lstFiles.FormattingEnabled = true;
-			this.lstFiles.Location = new System.Drawing.Point(6, 60);
-			this.lstFiles.MultiColumn = true;
-			this.lstFiles.Name = "lstFiles";
-			this.lstFiles.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-			this.lstFiles.Size = new System.Drawing.Size(671, 186);
-			this.lstFiles.TabIndex = 2;
-			// 
-			// btnSave
-			// 
-			this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnSave.Location = new System.Drawing.Point(648, 265);
-			this.btnSave.Name = "btnSave";
-			this.btnSave.Size = new System.Drawing.Size(29, 20);
-			this.btnSave.TabIndex = 3;
-			this.btnSave.Text = "...";
-			this.btnSave.UseVisualStyleBackColor = true;
-			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-			// 
-			// txtSavePath
-			// 
-			this.txtSavePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtSavePath.Location = new System.Drawing.Point(7, 266);
-			this.txtSavePath.Name = "txtSavePath";
-			this.txtSavePath.ReadOnly = true;
-			this.txtSavePath.Size = new System.Drawing.Size(635, 20);
-			this.txtSavePath.TabIndex = 4;
-			// 
-			// btnConvert
-			// 
-			this.btnConvert.Anchor = System.Windows.Forms.AnchorStyles.Top;
-			this.btnConvert.Enabled = false;
-			this.btnConvert.Location = new System.Drawing.Point(174, 298);
-			this.btnConvert.Name = "btnConvert";
-			this.btnConvert.Size = new System.Drawing.Size(145, 25);
-			this.btnConvert.TabIndex = 5;
-			this.btnConvert.Text = "Convert";
-			this.btnConvert.UseVisualStyleBackColor = true;
-			this.btnConvert.Click += new System.EventHandler(this.btnConvert_Click);
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(4, 249);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(60, 13);
-			this.label1.TabIndex = 6;
-			this.label1.Text = "Save Path:";
-			// 
-			// label2
-			// 
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(3, 19);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(56, 13);
-			this.label2.TabIndex = 7;
-			this.label2.Text = "Load Path";
-			// 
-			// btnLoad
-			// 
-			this.btnLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnLoad.Enabled = false;
-			this.btnLoad.Location = new System.Drawing.Point(613, 35);
-			this.btnLoad.Name = "btnLoad";
-			this.btnLoad.Size = new System.Drawing.Size(63, 19);
-			this.btnLoad.TabIndex = 8;
-			this.btnLoad.Text = "Load";
-			this.btnLoad.UseVisualStyleBackColor = true;
-			this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
-			// 
-			// btnClear
-			// 
-			this.btnClear.Anchor = System.Windows.Forms.AnchorStyles.Top;
-			this.btnClear.Location = new System.Drawing.Point(328, 298);
-			this.btnClear.Name = "btnClear";
-			this.btnClear.Size = new System.Drawing.Size(145, 25);
-			this.btnClear.TabIndex = 9;
-			this.btnClear.Text = "Clear";
-			this.btnClear.UseVisualStyleBackColor = true;
-			this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
 			// 
 			// groupBox2
 			// 
 			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox2.AutoSize = true;
 			this.groupBox2.Controls.Add(this.chkEmulatedDrive);
 			this.groupBox2.Controls.Add(this.label3);
 			this.groupBox2.Controls.Add(this.cboAppleType);
 			this.groupBox2.Controls.Add(this.chkAutoUnzip);
-			this.groupBox2.Location = new System.Drawing.Point(7, 355);
+			this.groupBox2.Location = new System.Drawing.Point(3, 453);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(684, 152);
+			this.groupBox2.Size = new System.Drawing.Size(986, 214);
 			this.groupBox2.TabIndex = 1;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Advanced Settings";
@@ -417,14 +285,141 @@
 			this.tabControl1.Location = new System.Drawing.Point(4, 5);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(705, 536);
+			this.tabControl1.Size = new System.Drawing.Size(1003, 699);
 			this.tabControl1.TabIndex = 0;
+			// 
+			// groupBox1
+			// 
+			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox1.Controls.Add(this.btnClear);
+			this.groupBox1.Controls.Add(this.btnConvert);
+			this.groupBox1.Controls.Add(this.btnLoad);
+			this.groupBox1.Controls.Add(this.label2);
+			this.groupBox1.Controls.Add(this.label1);
+			this.groupBox1.Controls.Add(this.txtSavePath);
+			this.groupBox1.Controls.Add(this.btnSave);
+			this.groupBox1.Controls.Add(this.lstFiles);
+			this.groupBox1.Controls.Add(this.txtLoadPath);
+			this.groupBox1.Controls.Add(this.btnBrowse);
+			this.groupBox1.Location = new System.Drawing.Point(3, 6);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(985, 441);
+			this.groupBox1.TabIndex = 2;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Files";
+			// 
+			// btnLoad
+			// 
+			this.btnLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnLoad.Enabled = false;
+			this.btnLoad.Location = new System.Drawing.Point(915, 31);
+			this.btnLoad.Name = "btnLoad";
+			this.btnLoad.Size = new System.Drawing.Size(60, 20);
+			this.btnLoad.TabIndex = 28;
+			this.btnLoad.Text = "Load";
+			this.btnLoad.UseVisualStyleBackColor = true;
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(3, 15);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(56, 13);
+			this.label2.TabIndex = 27;
+			this.label2.Text = "Load Path";
+			// 
+			// label1
+			// 
+			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(4, 344);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(60, 13);
+			this.label1.TabIndex = 26;
+			this.label1.Text = "Save Path:";
+			// 
+			// txtSavePath
+			// 
+			this.txtSavePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtSavePath.Location = new System.Drawing.Point(6, 360);
+			this.txtSavePath.Name = "txtSavePath";
+			this.txtSavePath.ReadOnly = true;
+			this.txtSavePath.Size = new System.Drawing.Size(939, 20);
+			this.txtSavePath.TabIndex = 24;
+			// 
+			// btnSave
+			// 
+			this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnSave.Location = new System.Drawing.Point(951, 360);
+			this.btnSave.Name = "btnSave";
+			this.btnSave.Size = new System.Drawing.Size(24, 20);
+			this.btnSave.TabIndex = 23;
+			this.btnSave.Text = "...";
+			this.btnSave.UseVisualStyleBackColor = true;
+			// 
+			// lstFiles
+			// 
+			this.lstFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lstFiles.ColumnWidth = 400;
+			this.lstFiles.FormattingEnabled = true;
+			this.lstFiles.Location = new System.Drawing.Point(7, 58);
+			this.lstFiles.MultiColumn = true;
+			this.lstFiles.Name = "lstFiles";
+			this.lstFiles.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+			this.lstFiles.Size = new System.Drawing.Size(968, 277);
+			this.lstFiles.TabIndex = 22;
+			// 
+			// txtLoadPath
+			// 
+			this.txtLoadPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtLoadPath.Location = new System.Drawing.Point(6, 31);
+			this.txtLoadPath.Name = "txtLoadPath";
+			this.txtLoadPath.ReadOnly = true;
+			this.txtLoadPath.Size = new System.Drawing.Size(868, 20);
+			this.txtLoadPath.TabIndex = 21;
+			// 
+			// btnBrowse
+			// 
+			this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnBrowse.Location = new System.Drawing.Point(880, 31);
+			this.btnBrowse.Name = "btnBrowse";
+			this.btnBrowse.Size = new System.Drawing.Size(29, 21);
+			this.btnBrowse.TabIndex = 20;
+			this.btnBrowse.Text = "...";
+			this.btnBrowse.UseVisualStyleBackColor = true;
+			// 
+			// btnClear
+			// 
+			this.btnClear.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+			this.btnClear.Location = new System.Drawing.Point(573, 396);
+			this.btnClear.Name = "btnClear";
+			this.btnClear.Size = new System.Drawing.Size(197, 25);
+			this.btnClear.TabIndex = 31;
+			this.btnClear.Text = "Clear";
+			this.btnClear.UseVisualStyleBackColor = true;
+			// 
+			// btnConvert
+			// 
+			this.btnConvert.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+			this.btnConvert.Enabled = false;
+			this.btnConvert.Location = new System.Drawing.Point(235, 396);
+			this.btnConvert.Name = "btnConvert";
+			this.btnConvert.Size = new System.Drawing.Size(197, 25);
+			this.btnConvert.TabIndex = 30;
+			this.btnConvert.Text = "Convert";
+			this.btnConvert.UseVisualStyleBackColor = true;
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(710, 566);
+			this.ClientSize = new System.Drawing.Size(1008, 729);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.tabControl1);
 			this.Name = "Form1";
@@ -434,9 +429,6 @@
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
 			this.tabConvert.ResumeLayout(false);
-			this.tabConvert.PerformLayout();
-			this.groupBox1.ResumeLayout(false);
-			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
 			this.tabBrowser.ResumeLayout(false);
@@ -445,6 +437,8 @@
 			this.toolStrip1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picLoad)).EndInit();
 			this.tabControl1.ResumeLayout(false);
+			this.groupBox1.ResumeLayout(false);
+			this.groupBox1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -463,17 +457,6 @@
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.ComboBox cboAppleType;
 		private System.Windows.Forms.CheckBox chkAutoUnzip;
-		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.Button btnClear;
-		private System.Windows.Forms.Button btnLoad;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Button btnConvert;
-		private System.Windows.Forms.TextBox txtSavePath;
-		private System.Windows.Forms.Button btnSave;
-		private System.Windows.Forms.ListBox lstFiles;
-		private System.Windows.Forms.TextBox txtLoadPath;
-		private System.Windows.Forms.Button btnBrowse;
 		private System.Windows.Forms.TabPage tabBrowser;
 		private System.Windows.Forms.PictureBox picLoad;
 		private System.Windows.Forms.WebBrowser webBrowser1;
@@ -485,6 +468,17 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripButton btnStop;
 		private System.Windows.Forms.TabControl tabControl1;
+		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.Button btnLoad;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.TextBox txtSavePath;
+		private System.Windows.Forms.Button btnSave;
+		private System.Windows.Forms.ListBox lstFiles;
+		private System.Windows.Forms.TextBox txtLoadPath;
+		private System.Windows.Forms.Button btnBrowse;
+		private System.Windows.Forms.Button btnClear;
+		private System.Windows.Forms.Button btnConvert;
 	}
 }
 
