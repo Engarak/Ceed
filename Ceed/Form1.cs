@@ -176,7 +176,8 @@ namespace Ceed
 
 		private void webBrowser1_Navigating(object sender, WebBrowserNavigatingEventArgs e)
 		{
-			txtURLBar.Text = "Loading...";
+			picLoad.Enabled = true;
+			//txtURLBar.Text = "Loading...";
 		}
 
 		private void webBrowser1_Navigated(object sender, WebBrowserNavigatedEventArgs e)
@@ -184,10 +185,12 @@ namespace Ceed
 			try
 			{
 				txtURLBar.Text = webBrowser1.Url.ToString();
+				picLoad.Enabled = false;
 			}
 			catch
 			{
-				txtURLBar.Text = "Loading...";
+				picLoad.Enabled = true;
+				//txtURLBar.Text = "Loading...";
 			}
 		}
 		private void unzipFiles(string filePath)
