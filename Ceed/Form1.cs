@@ -20,12 +20,40 @@ namespace Ceed
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			var appName = Process.GetCurrentProcess().ProcessName + ".exe";
+
+			//setup to pull app config data
 			var loadPath = ConfigurationManager.AppSettings["loadPath"];
 			var savePath = ConfigurationManager.AppSettings["savePath"];
+			//if this is the first run, force the webbrowser control to use the highest IE engine (requires restart)
+			if (ConfigurationManager.AppSettings["savePath"] == "0")
+			{
+				
+				var appName = Process.GetCurrentProcess().ProcessName + ".exe";
+				SetIEKeyforWebBrowserControl(appName);
+				string ProviderKey = "firstRun";
+				Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+				config.AppSettings.Settings[ProviderKey].Value = "1";
+				config.Save();
+				ConfigurationManager.RefreshSection("appSettings");
+				try
+				{
+					//run the program again and close this one
+					Process.Start(Application.StartupPath + "\\ceed.exe");
+					//or you can use Application.ExecutablePath
+
+					//close this one
+					Process.GetCurrentProcess().Kill();
+				}
+				catch(Exception exc)
+				{
+					statusDetails("Error setting browser version, right click the application and run as Administrator. " + exc.Message);
+				}
+			}
+			//convert and set home page 
 			System.Uri uri = new System.Uri(ConfigurationManager.AppSettings["homeLink"]);
 			webBrowser1.Url=uri;
 			var runPath = Environment.CurrentDirectory.ToString();
+			//get load and save path
 			if(loadPath!=@"c:\")
 			{
 				txtLoadPath.Text = loadPath;
@@ -36,7 +64,7 @@ namespace Ceed
 			{
 				txtSavePath.Text = savePath;
 			}
-			SetIEKeyforWebBrowserControl(appName);
+			//get latest C2T, clear out the prior version before extracting, rename extraction folder, and then delete zip file
 			try
 			{
 				System.IO.DirectoryInfo di = new DirectoryInfo(runPath + @"\temp");
@@ -97,9 +125,11 @@ namespace Ceed
 
 		private void btnHome_Click(object sender, EventArgs e)
 		{
+			//make home button go to set home page
 			webBrowser1.Navigate(ConfigurationManager.AppSettings["homeLink"]);
 		}
 
+		//simple forward and backward button
 		private void btnFwd_Click(object sender, EventArgs e)
 		{
 			if(webBrowser1.CanGoForward)
@@ -112,6 +142,7 @@ namespace Ceed
 				webBrowser1.GoBack();
 		}
 		
+		//set IE version to latest version
 		private void SetIEKeyforWebBrowserControl(string appName)
 		{
 			RegistryKey Regkey = null;
@@ -146,7 +177,7 @@ namespace Ceed
 				//If user't have priviledges to access registry 
 				if (Regkey == null)
 				{
-					MessageBox.Show("Registry Key for setting IE WebBrowser Rendering Address Not found. Try run the program with administrator's right.");
+					MessageBox.Show("Registry Key for setting IE WebBrowser Rendering Address Not found. Try running the program with administrator's right.");
 					return;
 				}
 
@@ -173,28 +204,29 @@ namespace Ceed
 					Regkey.Close();
 			}
 		}
-
+		//run/stop loading image
 		private void webBrowser1_Navigating(object sender, WebBrowserNavigatingEventArgs e)
 		{
 			picLoad.Enabled = true;
-			//txtURLBar.Text = "Loading...";
 		}
 
 		private void webBrowser1_Navigated(object sender, WebBrowserNavigatedEventArgs e)
 		{
 			try
 			{
+				//update URL and stop loading icon
 				txtURLBar.Text = webBrowser1.Url.ToString();
 				picLoad.Enabled = false;
 			}
 			catch
 			{
+				//if error stop loading icon
 				picLoad.Enabled = true;
-				//txtURLBar.Text = "Loading...";
 			}
 		}
 		private void unzipFiles(string filePath)
 		{
+			//used to unzip disk images on load up
 			try
 			{				
 				DirectoryInfo directory = new DirectoryInfo(filePath);
@@ -208,11 +240,13 @@ namespace Ceed
 			}
 			catch (Exception exc)
 			{
+				//let users know if we can't unzip a file
 				statusDetails(exc.Message);
 			}
 		}
 		private void loadGames()
 		{
+			//loading disk images (.dsk currently) from path specified by a user
 			try
 			{
 				string loadPath = ConfigurationManager.AppSettings["loadPath"];
@@ -259,11 +293,13 @@ namespace Ceed
 			config.AppSettings.Settings[ProviderKey].Value = txtLoadPath.Text;
 			config.Save();
 			ConfigurationManager.RefreshSection("appSettings");
+			//load disk images to list box
 			loadGames();
 		}
 
 		private void timer1_Tick(object sender, EventArgs e)
 		{
+			//make sure you can't click convert till all fields are set
 			if (txtLoadPath.Text != "" && txtSavePath.Text != "" && lstFiles.Items.Count>0)
 			{
 				btnConvert.Enabled = true;
@@ -274,7 +310,7 @@ namespace Ceed
 		{
 			if (dlgSavePath.ShowDialog() == DialogResult.OK)
 			{
-				//save new path to app.config
+				//save new save path to app.config
 				txtSavePath.Text = dlgSavePath.SelectedPath.ToString();
 				string ProviderKey = "savePath";
 				Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
@@ -287,6 +323,7 @@ namespace Ceed
 
 		private void btnClear_Click(object sender, EventArgs e)
 		{
+			//clear settings and reset config file
 			string ProviderKey = "savePath";
 			Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 			config.AppSettings.Settings[ProviderKey].Value = @"c:\";
@@ -302,18 +339,22 @@ namespace Ceed
 		
 		private void statusDetails(string statusMessage)
 		{
+			//easy way to notify user and show text red for a few moments
 			lblStatus.ForeColor = System.Drawing.Color.Red;
 			lblStatus.Text = statusMessage;
 			tmrColorChange.Start();
-
 		}
 		private void btnConvert_Click(object sender, EventArgs e)
 		{
+			// run selected disk image(s) with user specified settings through C2T
 			var converCount = 0;
+			//make sure we have images selected
 			if (lstFiles.SelectedItems.Count > 0)
 			{
+				//for each item, run through process one at a time
 				foreach (var diskImage in lstFiles.SelectedItems)
 				{
+					//get path details for images and save path, flags and convert
 					arguments = string.Empty;
 					var appPath = @"""" + Environment.CurrentDirectory.ToString() + @"\c2t\bin\c2t-96h.exe""";
 					if (cboAppleType.Text == "Apple //")
@@ -334,6 +375,7 @@ namespace Ceed
 					arguments = arguments + @" """ + txtLoadPath.Text + @"\" + diskImage.ToString() + @""" """ + txtSavePath.Text + @"\" + outputFile[0] + @".wav""";
 					try
 					{
+						//update user on status
 						statusDetails("converting " + diskImage.ToString());
 						System.Diagnostics.Process process = new System.Diagnostics.Process();
 						System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
@@ -348,18 +390,22 @@ namespace Ceed
 					{
 						statusDetails(exc.Message);
 					}
+					//give a final print out
 					statusDetails("Conversion of " + converCount + " disk images completed.  Check " + txtSavePath.Text + " for converted files");
 				}
 			}
 			else
 			{
+				//let user know to select items
 				statusDetails("Please select one or more disk images.");
 			}
 		}
 
 		private void tmrColorChange_Tick(object sender, EventArgs e)
 		{
+			//put status text back to black and stop timer
 			lblStatus.ForeColor= System.Drawing.Color.Black;
+			tmrColorChange.Enabled = false;
 		}
 	}
 }
