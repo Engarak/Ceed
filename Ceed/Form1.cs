@@ -306,22 +306,8 @@ namespace Ceed
 			}
 		}
 
-		private void btnSave_Click(object sender, EventArgs e)
-		{
-			if (dlgSavePath.ShowDialog() == DialogResult.OK)
-			{
-				//save new save path to app.config
-				txtSavePath.Text = dlgSavePath.SelectedPath.ToString();
-				string ProviderKey = "savePath";
-				Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-				config.AppSettings.Settings[ProviderKey].Value = txtSavePath.Text;
-				config.Save();
-				ConfigurationManager.RefreshSection("appSettings");
-				statusDetails("Save path selected successfully!");
-			}
-		}
 
-		private void btnClear_Click(object sender, EventArgs e)
+        private void btnClear_Click(object sender, EventArgs e)
 		{
 			//clear settings and reset config file
 			string ProviderKey = "savePath";
@@ -370,6 +356,10 @@ namespace Ceed
 					{
 						arguments = arguments + " -n ";
 					}
+                    if(cboAppleType.Text==@"Apple //" && chkAudioFile.Checked==true)
+                    {                  
+                        arguments = arguments + " -a ";
+                    }
 					string[] outputFile = diskImage.ToString().Split('.');
 
 					arguments = arguments + @" """ + txtLoadPath.Text + @"\" + diskImage.ToString() + @""" """ + txtSavePath.Text + @"\" + outputFile[0] + @".wav""";
@@ -407,5 +397,32 @@ namespace Ceed
 			lblStatus.ForeColor= System.Drawing.Color.Black;
 			tmrColorChange.Enabled = false;
 		}
-	}
+
+        private void cboAppleType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(cboAppleType.Text=="Apple //")
+            {
+                chkAudioFile.Enabled = true;
+            }
+            else
+            {
+                chkAudioFile.Enabled = false;
+            }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (dlgSavePath.ShowDialog() == DialogResult.OK)
+            {
+                //save new path to app.config
+                txtSavePath.Text = dlgSavePath.SelectedPath.ToString();
+                string ProviderKey = "savePath";
+                Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                config.AppSettings.Settings[ProviderKey].Value = txtSavePath.Text;
+                config.Save();
+                ConfigurationManager.RefreshSection("appSettings");
+                statusDetails("Path captured, click convert to output the audio file.");
+            }
+        }
+    }
 }
